@@ -1,0 +1,428 @@
+{
+  "projeto": {
+    "nome": "Catalogo Mobile - Adaptacao Visual Sem Alterar a Loja",
+    "tipo": "Interface mobile de catálogo digital",
+    "idioma": "pt-BR",
+    "objetivo_principal": "Adaptar exclusivamente a apresentacao visual do catalogo para uma experiencia mobile inspirada na descoberta de produtos do TikTok Shop. O trabalho deve atuar sobre a interface existente, preservando integralmente os produtos, os dados, a identidade visual, a paleta de cores, as regras de negocio e o funcionamento atual da loja. A referencia ao TikTok Shop serve apenas para orientar a organizacao visual, a disposicao dos cards, a busca, as proporcoes de midia e a navegacao de descoberta. Nao reconstruir a loja, nao substituir seu conteudo e nao alterar qualquer comportamento funcional existente.",
+    "referencia_de_experiencia": "Utilizar como inspiração a organização visual, a descoberta de conteúdo, o feed vertical e a navegação rápida do TikTok Shop, sem copiar logotipo, identidade proprietária ou elementos de marca registrados.",
+    "restricoes_criticas": [
+      "ALTERAR SOMENTE A CAMADA VISUAL / LAYOUT MOBILE do catalogo. Nao reconstruir nem substituir a aplicacao existente.",
+      "Preservar todos os produtos atuais exatamente como estao cadastrados: nomes, descricoes, codigos, SKUs, precos, marcas, categorias, variacoes, imagens, videos, atributos, etiquetas, status e relacoes.",
+      "Nao excluir, substituir, duplicar, renomear, reclassificar ou criar produtos. Nao trocar fotos, videos, capas ou qualquer midia dos produtos existentes.",
+      "Preservar integralmente a paleta de cores atual da loja, incluindo cores primarias, secundarias, de destaque, fundos, textos, bordas, estados e gradientes. Nao aplicar a paleta do TikTok nem as cores sugeridas neste documento.",
+      "Preservar logotipo, identidade visual, fontes, iconografia, estilo de botoes, bordas, sombras e demais elementos de marca existentes. Reorganizar os elementos sem descaracterizar a loja.",
+      "Preservar o funcionamento atual do sistema: regras de negocio, banco de dados, modelos, APIs, integracoes, autenticacao, permissoes, rotas, links, eventos, filtros, ordenacoes e acoes existentes.",
+      "Nao remover, renomear, desativar ou alterar funcionalidades, botoes, menus, campos, validacoes, fluxos, configuracoes ou permissoes existentes.",
+      "Nao criar novas regras de negocio nem alterar a origem, o calculo, a persistencia ou a exibicao dos dados. Os componentes novos ou reorganizados devem continuar conectados aos mesmos dados e operacoes atuais.",
+      "Nao inserir dados demonstrativos, produtos ficticios, marcas ficticias, precos inventados, avaliacoes, contagens de visualizacao ou especificacoes que nao existam na loja.",
+      "Nao implementar carrinho, checkout, pagamento ou fluxo de compra como parte desta solicitacao. Se tais recursos ja existirem em outras partes do sistema, nao os modificar nem os remover; apenas nao os adicionar ao novo layout de catalogo.",
+      "Nao criar telas ou abas novas que substituam a navegacao existente. A organizacao visual pode se inspirar na referencia, mas deve respeitar as rotas e destinos ja implementados.",
+      "Usar categorias, filtros, busca, videos, banners e informacoes somente quando esses recursos e dados ja existirem. Nao criar conteudo ou funcionalidades para preencher espacos vazios.",
+      "Nao alterar a experiencia desktop ou tablet. Aplicar os ajustes de composicao somente no breakpoint mobile, preservando os layouts existentes nas demais resolucoes.",
+      "Antes de alterar qualquer componente, inspecionar a implementacao atual e identificar os dados, estilos, componentes e comportamentos que precisam ser preservados.",
+      "Em caso de conflito entre qualquer referencia visual deste documento e o sistema existente, a preservacao do sistema, dos produtos, da identidade visual e do funcionamento atual tem prioridade absoluta."
+    ]
+  },
+  "diretrizes_de_design": {
+    "abordagem": "Mobile-first, visual, moderna, intuitiva e orientada à descoberta de produtos.",
+    "estilo": "Reorganizar a interface mobile com inspiracao na experiencia de descoberta do TikTok Shop, mas mantendo integralmente a identidade visual ja existente da loja. Nao aplicar uma nova linguagem visual, paleta, marca ou sistema de componentes.",
+    "referencia_de_viewport": {
+      "largura_px": 390,
+      "altura_px": 844,
+      "largura_minima_px": 320,
+      "comportamento": "Adaptar o layout para diferentes larguras de smartphones sem cortar conteúdo ou exigir rolagem horizontal da página inteira."
+    },
+    "cores": {
+      "regra": "Nao definir nem substituir cores. Herdar integralmente a paleta ja utilizada pela loja.",
+      "fonte_das_cores": "Tokens, variaveis CSS, tema ou estilos globais existentes no projeto.",
+      "preservar": [
+        "Fundo principal",
+        "Fundos secundarios",
+        "Texto principal",
+        "Texto secundario",
+        "Bordas",
+        "Cor primaria",
+        "Cor secundaria",
+        "Cores de destaque",
+        "Estados de sucesso, alerta e erro",
+        "Gradientes e transparencias existentes"
+      ],
+      "fallback": "Se nao for possivel identificar a paleta atual, nao inventar cores: manter os estilos originais e solicitar analise da implementacao antes de aplicar mudancas."
+    },
+    "tipografia": {
+      "regra": "Preservar a familia tipografica, os pesos, os estilos e a identidade tipografica atuais da loja.",
+      "ajustes_permitidos": "Ajustar somente tamanho, espacamento e quebra de linha quando indispensavel para legibilidade mobile, sem trocar a fonte nem descaracterizar a hierarquia existente."
+    },
+    "espacamento": {
+      "unidade_base_px": 8,
+      "margem_lateral_px": 16,
+      "espaco_entre_cards_px": 10,
+      "raio_cards_px": "10 a 12",
+      "raio_campos_px": "10 a 12"
+    },
+    "navegacao": {
+      "barra_inferior": "Fixa na parte inferior, respeitando a safe area do dispositivo.",
+      "altura_conteudo_px": "56 a 64, além da área segura do sistema",
+      "abas": "Mapear visualmente as secoes e destinos que ja existem na loja. Os nomes Início, Buscar, Vídeos e Categorias sao apenas exemplos de layout e nao devem ser criados se nao corresponderem a rotas ou funcionalidades existentes.",
+      "observacao": "A barra inferior e apenas uma referencia de composicao. Reutilizar os destinos, abas, rotas e acoes que ja existem. Nao criar, remover ou renomear destinos. Nao adicionar aba de carrinho, sacola, pedidos ou checkout como parte deste novo layout."
+    }
+  },
+  "estrutura_de_telas": {
+    "tela_inicial": {
+      "objetivo": "Reorganizar visualmente a pagina inicial existente para facilitar a descoberta de produtos, sem modificar seu conteudo, seus recursos ou seu funcionamento.",
+      "ordem_dos_elementos": [
+        "Reorganizar o cabecalho existente, preservando logo, links, botoes e acoes.",
+        "Apresentar o campo de pesquisa existente em posicao visualmente destacada, sem alterar sua logica.",
+        "Apresentar categorias existentes em faixa horizontal, se esse recurso ja estiver disponivel.",
+        "Manter banners e destaques ja cadastrados, se existirem, sem trocar suas imagens ou textos.",
+        "Reorganizar filtros e secoes existentes, sem criar novas regras de ordenacao.",
+        "Apresentar os produtos atuais em grade mobile, sem substituir nem alterar os registros.",
+        "Preservar a navegacao atual e apenas adaptar sua disposicao visual quando necessario para mobile."
+      ],
+      "cabecalho": {
+        "altura_referencia_px": 56,
+        "conteudo": "Logotipo ou nome da loja e, opcionalmente, acesso a informações institucionais.",
+        "comportamento": "Manter o cabeçalho compacto e não disputar atenção com os produtos."
+      },
+      "barra_de_pesquisa": {
+        "altura_px": 44,
+        "raio_borda_px": "10 a 12",
+        "placeholder": "Buscar produtos, marcas e categorias",
+        "elementos": [
+          "Ícone de lupa",
+          "Campo de texto",
+          "Acesso visual a filtros, quando aplicável"
+        ],
+        "funcionalidades": [
+          "Pesquisar por nome do produto.",
+          "Pesquisar por marca.",
+          "Pesquisar por categoria.",
+          "Pesquisar por palavras-chave e características cadastradas.",
+          "Exibir sugestões enquanto o usuário digita.",
+          "Exibir histórico de pesquisas recentes, com opção de limpar o histórico."
+        ]
+      },
+      "categorias_horizontais": {
+        "altura_referencia_px": "36 a 40",
+        "comportamento": "Rolagem horizontal dentro da faixa, sem quebrar as categorias em várias linhas.",
+        "exemplos": "Usar exclusivamente as categorias que ja existem no catalogo. Exemplos ilustrativos nao autorizam criar, renomear ou reclassificar categorias.",
+        "estado_ativo": "Destacar visualmente a categoria selecionada."
+      },
+      "banner": {
+        "obrigatorio": false,
+        "proporcoes_recomendadas": [
+          "16:5",
+          "16:6"
+        ],
+        "comportamento": "Imagem responsiva, sem distorção e com texto legível quando houver sobreposição."
+      }
+    },
+    "grade_de_produtos": {
+      "objetivo": "Exibir produtos de forma visual, organizada e fácil de percorrer.",
+      "colunas_mobile": 2,
+      "referencia_de_dimensoes_em_viewport_390px": {
+        "margem_lateral_px": 16,
+        "espaco_entre_colunas_px": 10,
+        "largura_aproximada_card_px": 174,
+        "proporcao_imagem": "4:5",
+        "altura_aproximada_imagem_px": 218
+      },
+      "card_de_produto": {
+        "elementos": [
+          "Imagem principal ja associada ao produto no catalogo atual.",
+          "Etiquetas ja cadastradas, quando existirem.",
+          "Nome original do produto, sem alteracoes.",
+          "Marca ou categoria ja cadastrada, quando disponivel.",
+          "Preco original, somente se ja existir e ja for exibido pela loja.",
+          "Manter os indicadores e as acoes atuais do card."
+        ],
+        "imagem": {
+          "proporcao": "4:5",
+          "dimensionamento": "Preencher o espaço sem deformar a imagem; permitir recorte controlado com object-fit: cover.",
+          "fundo": "Usar fundo neutro quando adequado ao tipo de produto."
+        },
+        "texto": {
+          "nome_maximo_linhas": 2,
+          "truncamento": "Usar reticências quando exceder o limite, mantendo o nome completo na tela de detalhes."
+        },
+        "interacao": "Manter exatamente a acao atual do card ao ser tocado. Alterar somente a apresentacao visual e o dimensionamento mobile; nao mudar destino, evento, regra ou comportamento."
+      },
+      "responsividade": "Manter duas colunas em smartphones. Em telas maiores, aumentar margens e espaçamentos de forma proporcional, sem esticar excessivamente os cards."
+    },
+    "tela_de_busca": {
+      "objetivo": "Adaptar visualmente a busca que ja existe na loja. Preservar a mesma logica, os mesmos campos, as mesmas regras, os mesmos filtros e a mesma origem dos resultados.",
+      "componentes": [
+        "Campo de pesquisa em destaque.",
+        "Botão ou painel de filtros.",
+        "Sugestões de pesquisa.",
+        "Pesquisas recentes.",
+        "Termos populares ou categorias sugeridas, se disponíveis.",
+        "Resultados em grade de duas colunas."
+      ],
+      "filtros_visuais_sugeridos": "Exibir somente filtros e ordenacoes que ja estejam implementados. Nao criar filtros novos nem alterar o funcionamento dos existentes.",
+      "estados": [
+        "Estado inicial antes da pesquisa.",
+        "Estado com sugestões durante a digitação.",
+        "Estado com resultados.",
+        "Estado sem resultados, com orientação para revisar os termos.",
+        "Estado de carregamento."
+      ],
+      "regra": "A busca deve continuar utilizando exatamente a implementacao e os dados atuais. Mudar apenas sua disposicao visual no mobile."
+    },
+    "tela_de_categorias": {
+      "objetivo": "Reorganizar visualmente as categorias existentes, mantendo seus nomes, identificadores, hierarquia, destinos e regras atuais.",
+      "apresentacao": "Lista ou grade de categorias com ícones ou imagens representativas.",
+      "interacao": "Ao selecionar uma categoria, abrir uma listagem de produtos correspondente, preservando o padrão de cards da tela inicial."
+    },
+    "feed_de_videos": {
+      "objetivo": "Se a loja ja possuir videos de produtos e uma experiencia de exibicao correspondente, adaptar sua apresentacao mobile para um formato vertical de descoberta, sem substituir os arquivos ou mudar sua associacao. Se nao existir esse recurso, nao criar um feed novo.",
+      "formato": "Vídeo vertical 9:16, ocupando a maior parte ou toda a área útil da tela.",
+      "comportamentos": [
+        "Reproduzir automaticamente o vídeo visível, respeitando as configurações do dispositivo.",
+        "Pausar vídeos que saírem da área visível ou quando o usuário sair da tela.",
+        "Permitir avançar para o próximo vídeo com gesto vertical para cima.",
+        "Permitir retornar ao vídeo anterior com gesto vertical para baixo.",
+        "Exibir miniatura enquanto o vídeo carrega.",
+        "Disponibilizar controle de áudio e reprodução.",
+        "Exibir nome do produto e informações resumidas sobre ele.",
+        "Disponibilizar ação Ver produto para abrir a página de detalhes."
+      ],
+      "elementos_sobrepostos": [
+        "Nome ou identificação da loja/criador, se cadastrado.",
+        "Descrição curta do vídeo.",
+        "Nome do produto relacionado.",
+        "Ação Ver produto.",
+        "Controle de som."
+      ],
+      "restricoes": [
+        "Não incluir botão Comprar.",
+        "Não incluir carrinho ou checkout.",
+        "Não transformar a tela em uma transmissão de venda obrigatória.",
+        "Nao criar feed, cadastro, publicacao ou mecanismo novo de videos caso isso nao exista na aplicacao atual."
+      ]
+    },
+    "grade_de_videos": {
+      "objetivo": "Permitir descobrir vídeos sem entrar diretamente no feed em tela cheia.",
+      "apresentacao": "Grade com miniaturas verticais, preferencialmente em três colunas quando a largura permitir.",
+      "proporcao_miniatura": "9:16",
+      "elementos": [
+        "Capa do vídeo",
+        "Indicador de reprodução",
+        "Título curto opcional",
+        "Contagem de visualizações somente se houver dado real"
+      ],
+      "interacao": "Ao tocar em uma miniatura, abrir o feed de vídeos no conteúdo correspondente."
+    },
+    "detalhes_do_produto": {
+      "objetivo": "Reorganizar visualmente a pagina de detalhes existente, preservando integralmente os dados, a estrutura de informacao e todas as acoes atuais do produto.",
+      "ordem_sugerida": [
+        "Galeria de imagens e vídeos.",
+        "Nome do produto e marca.",
+        "Informações resumidas.",
+        "Descrição completa.",
+        "Características e especificações técnicas.",
+        "Variações informativas, como cor, tamanho ou modelo, quando existirem.",
+        "Vídeos relacionados, quando disponíveis.",
+        "Produtos relacionados da mesma categoria."
+      ],
+      "galeria": {
+        "proporcao_preferencial": "4:5 para imagens e 9:16 para vídeos",
+        "navegacao": "Permitir deslizar horizontalmente entre mídias e indicar a posição atual por marcadores discretos.",
+        "comportamento": "Preservar a proporção e a qualidade dos arquivos."
+      },
+      "informacoes": "Exibir os dados originais ja cadastrados. Nao editar, completar, corrigir, inventar ou substituir informacoes do produto.",
+      "acoes_permitidas": "Preservar as acoes que ja existem na pagina atual. Nao adicionar novas acoes nem remover acoes existentes, exceto nao introduzir novos comandos de compra no layout de catalogo solicitado.",
+      "acoes_proibidas": [
+        "Comprar",
+        "Adicionar ao carrinho",
+        "Finalizar pedido",
+        "Pagar",
+        "Calcular frete"
+      ]
+    }
+  },
+  "especificacoes_de_midias": {
+    "imagens_de_produtos": {
+      "resolucao_recomendada_px": "1080 x 1350",
+      "proporcao_recomendada": "4:5",
+      "alternativa_px": "1080 x 1080",
+      "formatos": [
+        "WebP",
+        "AVIF",
+        "JPEG",
+        "PNG quando transparência for necessária"
+      ],
+      "orientacao": "Preferencialmente vertical para acompanhar a grade mobile.",
+      "regras": [
+        "Não esticar nem deformar imagens.",
+        "Utilizar recorte central ou ponto focal configurável.",
+        "Gerar versões otimizadas para miniaturas e visualização ampliada.",
+        "Exibir imagem substituta quando o arquivo não estiver disponível."
+      ]
+    },
+    "videos": {
+      "resolucao_recomendada_px": "1080 x 1920",
+      "proporcao": "9:16",
+      "formato_preferencial": "MP4",
+      "codec_video": "H.264",
+      "taxa_de_quadros_recomendada": "24 a 30 FPS",
+      "audio": "AAC quando houver áudio",
+      "regras": [
+        "Exibir miniatura antes da reprodução.",
+        "Otimizar carregamento e transmissão para conexões móveis.",
+        "Carregar prioritariamente o vídeo visível e preparar o próximo conteúdo quando viável.",
+        "Não reproduzir simultaneamente vários vídeos fora da tela.",
+        "Permitir controle de som e respeitar preferências de acessibilidade."
+      ]
+    },
+    "carregamento": [
+      "Implementar lazy loading para imagens e vídeos fora da área visível.",
+      "Utilizar placeholders ou skeletons durante carregamentos.",
+      "Priorizar imagens em tamanho adequado ao componente.",
+      "Evitar baixar vídeos completos antes de serem necessários.",
+      "Manter navegação fluida em conexões móveis."
+    ]
+  },
+  "interacoes_e_navegacao": {
+    "regras_gerais": [
+      "Todos os elementos que aparentam ser interativos devem funcionar.",
+      "Manter o contexto da navegação ao abrir e fechar os detalhes de um produto.",
+      "Ao retornar da página de detalhes, preservar a posição da grade e os filtros aplicados.",
+      "Utilizar transições discretas e rápidas.",
+      "Evitar modais desnecessários e excesso de etapas.",
+      "Manter áreas de toque confortáveis para uso com uma mão."
+    ],
+    "gestos": [
+      "Rolagem vertical para explorar listas e páginas.",
+      "Rolagem horizontal para categorias e galerias.",
+      "Deslize vertical no feed para trocar de vídeo.",
+      "Toque em cards para abrir detalhes."
+    ],
+    "estados_de_interface": [
+      "Carregando",
+      "Conteúdo disponível",
+      "Nenhum resultado",
+      "Erro de carregamento com opção de tentar novamente",
+      "Imagem indisponível",
+      "Vídeo indisponível"
+    ]
+  },
+  "modelo_de_conteudo": {
+    "produto": {
+      "campos": [
+        "id",
+        "nome",
+        "marca",
+        "categoria_id",
+        "descricao_curta",
+        "descricao_completa",
+        "imagens[]",
+        "videos[]",
+        "especificacoes[]",
+        "variacoes_informativas[]",
+        "preco_exibicao_opcional",
+        "etiquetas[]",
+        "palavras_chave[]",
+        "data_de_publicacao",
+        "status_de_exibicao"
+      ],
+      "observacao": "Representar os campos ja existentes apenas para exibicao. Nao alterar valores, estrutura ou persistencia dos dados de produtos."
+    },
+    "categoria": {
+      "campos": [
+        "id",
+        "nome",
+        "imagem_ou_icone_opcional",
+        "ordem_de_exibicao",
+        "status_de_exibicao"
+      ],
+      "observacao": "Utilizar as categorias existentes sem criar, renomear, excluir ou reorganizar sua estrutura persistida."
+    },
+    "video": {
+      "campos": [
+        "id",
+        "produto_id_opcional",
+        "arquivo",
+        "thumbnail",
+        "titulo_opcional",
+        "descricao_opcional",
+        "duracao",
+        "ordem_de_exibicao",
+        "status_de_exibicao"
+      ],
+      "observacao": "Utilizar somente videos e campos ja existentes. Nao criar uma nova estrutura de publicacao ou armazenamento."
+    },
+    "observacao_geral": "Mapeamento somente de leitura dos dados ja existentes. Nao criar, migrar, renomear, excluir ou alterar campos, tabelas, colecoes, registros ou relacionamentos do banco de dados."
+  },
+  "acessibilidade_e_qualidade": {
+    "requisitos": [
+      "Contraste suficiente entre texto e fundo.",
+      "Textos legíveis sem depender apenas de tamanho reduzido.",
+      "Descrições alternativas para imagens relevantes.",
+      "Controles com rótulos acessíveis.",
+      "Não comunicar estados somente por cor.",
+      "Respeitar áreas seguras do sistema operacional.",
+      "Evitar conteúdo encoberto pela barra inferior ou por elementos fixos."
+    ],
+    "desempenho": [
+      "Priorizar carregamento rápido da tela inicial.",
+      "Reduzir mudanças bruscas de layout durante o carregamento.",
+      "Otimizar imagens e miniaturas.",
+      "Utilizar paginação ou carregamento progressivo na grade.",
+      "Evitar reprodução de vídeos fora da tela."
+    ]
+  },
+  "criterios_de_aceitacao": [
+    "A alteracao deve se limitar ao layout e a apresentacao mobile do catalogo.",
+    "Todos os produtos, nomes, descricoes, precos, marcas, categorias, variacoes, etiquetas e especificacoes devem permanecer identicos aos originais.",
+    "Todas as imagens e videos devem continuar sendo os mesmos arquivos associados aos mesmos produtos.",
+    "A paleta de cores, o tema, o logotipo, a tipografia e a identidade visual da loja devem permanecer inalterados.",
+    "Todas as funcionalidades, regras de negocio, dados, rotas, APIs, integracoes, permissoes e acoes atuais devem continuar funcionando exatamente como antes.",
+    "A busca e os filtros devem manter a mesma logica e os mesmos resultados; somente a apresentacao visual pode ser reorganizada.",
+    "Os cards podem adotar proporcao 4:5 e grade mobile de duas colunas, desde que isso nao altere dados nem comportamento.",
+    "Os videos, se ja existirem, podem ser apresentados visualmente em formato vertical 9:16 sem substituir arquivos ou criar novo recurso.",
+    "A pagina de detalhes deve manter os dados e as acoes atuais, com adaptacao apenas de layout mobile.",
+    "Desktop e tablet devem permanecer inalterados.",
+    "Nao inserir conteudo ficticio ou dados demonstrativos quando houver dados reais disponiveis.",
+    "Nao implementar novos fluxos de compra, carrinho, checkout ou pagamento como parte desta adaptacao.",
+    "Se uma mudanca visual exigir alterar produtos, cores, dados ou funcionamento, essa mudanca nao deve ser executada."
+  ],
+  "instrucao_final_ao_construtor": "Antes de programar, analise a aplicacao atual e identifique seus produtos, midias, identidade visual, tokens de cor, componentes, rotas, acoes, regras de negocio e integracoes. Em seguida, adapte SOMENTE a camada visual do catalogo para mobile, inspirando-se na organizacao e na descoberta de produtos do TikTok Shop. Preserve integralmente todos os produtos e seus dados, todas as imagens e videos, a paleta de cores, a identidade visual e o funcionamento atual da loja. Reutilize a busca, os filtros, as rotas, os componentes e as operacoes que ja existem. Nao substitua conteudo, nao crie produtos ficticios, nao altere banco de dados, APIs, regras de negocio, permissoes ou integracoes. Nao modifique desktop ou tablet. Nao adicione funcionalidades de compra ao novo layout. Se algum exemplo visual deste prompt entrar em conflito com o sistema existente, ignore o exemplo e preserve o sistema. O resultado deve parecer uma versao mobile mais moderna do catalogo atual da propria loja, e nao uma loja nova.",
+  "politica_preservacao_obrigatoria": {
+    "prioridade": "MAXIMA - esta politica prevalece sobre qualquer outra instrucao visual deste JSON.",
+    "escopo_permitido": [
+      "Reorganizacao visual do catalogo em telas mobile.",
+      "Ajuste de espacamentos, dimensoes, alinhamentos, proporcoes dos cards e hierarquia visual.",
+      "Adaptacao responsiva dos componentes existentes para telas pequenas.",
+      "Reorganizacao visual da busca e dos filtros ja existentes, sem alterar sua logica.",
+      "Melhoria da apresentacao de imagens e videos que ja estao cadastrados, sem substituir os arquivos originais."
+    ],
+    "itens_que_devem_permanecer_inalterados": {
+      "catalogo_e_produtos": "Manter 100% dos registros e conteudos existentes, sem troca, exclusao, criacao, duplicacao ou edicao de dados.",
+      "midias": "Manter os arquivos e a associacao atual entre cada produto e suas imagens/videos. Nao gerar midias substitutas nem trocar a ordem cadastrada, salvo se a ordem mudar apenas visualmente e sem persistir alteracao.",
+      "identidade_visual": "Usar os tokens, variaveis CSS, tema, cores e componentes da identidade visual ja implementada. Nao definir uma nova paleta.",
+      "funcionamento": "Manter a logica, eventos, rotas, APIs, banco de dados, autenticacao, autorizacao, integracoes e operacoes existentes.",
+      "conteudo": "Manter textos, descricoes, nomes, precos, categorias, marcas, etiquetas e especificacoes originais.",
+      "outras_resolucoes": "Nao modificar o layout ou comportamento nas versoes desktop e tablet."
+    },
+    "regras_de_implementacao": [
+      "Fazer alteracoes de forma incremental e nao destrutiva.",
+      "Reutilizar componentes, estilos, tokens e funcoes ja existentes sempre que possivel.",
+      "Criar apenas estilos responsivos e ajustes de composicao necessarios para mobile.",
+      "Nao alterar schemas, migrations, tabelas, colecoes, estruturas de dados ou contratos de API.",
+      "Nao alterar valores persistidos no banco de dados durante a reorganizacao visual.",
+      "Nao conectar controles a operacoes novas. Cada controle deve manter exatamente a acao que ja executava.",
+      "Se uma referencia visual sugerir um recurso que nao existe atualmente, nao implementar esse recurso; adaptar ou omitir o elemento.",
+      "Se nao for possivel garantir a preservacao de algum comportamento, nao modificar esse comportamento."
+    ],
+    "validacao_antes_e_depois": [
+      "Comparar a quantidade e a identificacao dos produtos antes e depois da alteracao.",
+      "Confirmar que os mesmos produtos continuam associados as mesmas imagens, videos, categorias e variacoes.",
+      "Confirmar que a paleta e os tokens de identidade visual continuam iguais aos originais.",
+      "Testar os mesmos fluxos, botoes, filtros, busca, links, permissoes e operacoes que existiam antes.",
+      "Confirmar que desktop e tablet permanecem visualmente e funcionalmente inalterados.",
+      "Verificar que a alteracao se limita a apresentacao mobile do catalogo."
+    ],
+    "criterio_de_bloqueio": "Se a implementacao exigir substituir produtos, alterar a paleta, modificar dados ou mudar o funcionamento atual, interromper essa parte da implementacao e manter o sistema original."
+  }
+}
