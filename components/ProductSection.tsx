@@ -1,10 +1,9 @@
 import React, { useState, useMemo, useEffect, useRef, useDeferredValue } from 'react';
 import { Product } from '../types';
-import { CATEGORIES } from '../constants';
 import ProductCard from './ProductCard';
 import { SearchIcon, ChevronLeftIcon, ChevronRightIcon, CloseIcon } from './Icons';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { fetchMergedCatalog } from '../lib/catalog';
+import { useCatalog } from '../hooks/useCatalog';
 import { normalizeCompactText, normalizeText } from '../lib/utils';
 
 const PRODUCTS_PER_PAGE = 8;
@@ -37,31 +36,14 @@ const ProductSection: React.FC<ProductSectionProps> = ({ searchInputRef, onSelec
   const deferredSearchTerm = useDeferredValue(searchTerm);
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [visibleProductsCount, setVisibleProductsCount] = useState(PRODUCTS_PER_PAGE);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const catalog = useCatalog();
+  const products = useMemo(() => catalog?.products ?? [], [catalog]);
+  const categories = useMemo(() => ['Todos', ...(catalog?.categories ?? [])], [catalog]);
+  const isLoading = catalog === null;
   const localInputRef = useRef<HTMLInputElement>(null);
   const activeInputRef = searchInputRef ?? localInputRef;
   const categoryScrollRef = useRef<HTMLDivElement>(null);
   const { containerRef: titleRef, animationClasses: titleAnimation } = useScrollReveal<HTMLDivElement>();
-
-  useEffect(() => {
-    let isCancelled = false;
-
-    const loadProducts = async () => {
-      setIsLoading(true);
-      const allProducts = await fetchMergedCatalog();
-      if (!isCancelled) {
-        setProducts(allProducts);
-        setIsLoading(false);
-      }
-    };
-
-    loadProducts();
-    return () => {
-      isCancelled = true;
-    };
-  }, []);
 
   const searchMatchedProducts = useMemo(
     () => products.filter((product) => matchesProductQuery(product, deferredSearchTerm)),
@@ -188,7 +170,7 @@ const ProductSection: React.FC<ProductSectionProps> = ({ searchInputRef, onSelec
               role="tablist"
               aria-label="Filtrar por categoria"
             >
-              {CATEGORIES.map((category) => {
+              {categories.map((category) => {
                 const isSelected = selectedCategory === category;
                 const matchCount = categoryMatchCounts[category] ?? 0;
                 return (

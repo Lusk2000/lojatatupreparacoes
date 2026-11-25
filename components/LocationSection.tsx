@@ -6,11 +6,33 @@ import {
   Pin,
   useAdvancedMarkerRef,
 } from '@vis.gl/react-google-maps';
-import { GOOGLE_MAPS_SHARE_LINK, WHATSAPP_LINK } from '../constants';
+import {
+  GOOGLE_MAPS_SHARE_LINK,
+  LOCATION_SEARCH_QUERY,
+  WHATSAPP_LINK,
+} from '../constants';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { PlaceDetailsData } from '../types';
 import { useGooglePlace } from './GooglePlaceProvider';
 import { MapPinIcon, WhatsAppIcon } from './Icons';
+
+// Embed público do Google Maps: gratuito e não exige chave de API.
+const FREE_MAP_EMBED_URL = `https://maps.google.com/maps?q=${encodeURIComponent(
+  LOCATION_SEARCH_QUERY
+)}&hl=pt-BR&z=16&output=embed`;
+
+const FreeMapEmbed: React.FC = () => (
+  <div className="w-full h-[340px] sm:h-[420px] rounded-2xl overflow-hidden border border-white/15 bg-[#121212]">
+    <iframe
+      title="Localização da Tatu Preparações no Google Maps"
+      src={FREE_MAP_EMBED_URL}
+      className="w-full h-full border-0"
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      allowFullScreen
+    />
+  </div>
+);
 
 interface InteractiveMapCardProps {
   place: PlaceDetailsData;
@@ -110,47 +132,14 @@ const LocationSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch">
           <div className="lg:col-span-7">
             {!hasApiKey ? (
-              <div className="w-full h-[340px] sm:h-[420px] rounded-2xl border border-white/10 bg-[#181818] flex flex-col items-center justify-center p-6 text-center">
-                <MapPinIcon className="w-10 h-10 text-[#E10600] mb-3" />
-                <p className="text-base font-semibold text-white">
-                  Mapa Interativo Google Maps
-                </p>
-                <p className="text-sm text-gray-400 mt-1 max-w-sm">
-                  Acesse nossa localização oficial diretamente no Google Maps para ver rotas e avaliações.
-                </p>
-                <a
-                  href={GOOGLE_MAPS_SHARE_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 min-h-[44px] inline-flex items-center justify-center gap-2 bg-[#E10600] hover:bg-red-700 text-white font-['Oswald'] uppercase text-sm font-bold px-6 py-2.5 rounded-xl transition-colors"
-                >
-                  Abrir no Google Maps
-                </a>
-              </div>
+              <FreeMapEmbed />
             ) : isLoading ? (
               <div className="w-full h-[340px] sm:h-[420px] rounded-2xl border border-white/10 bg-[#181818] animate-pulse flex flex-col items-center justify-center p-6 text-center">
                 <MapPinIcon className="w-8 h-8 text-[#E10600]/80 mb-3" />
                 <p className="text-sm text-gray-300">Carregando mapa do Google Maps...</p>
               </div>
             ) : errorMessage || !placeData ? (
-              <div className="w-full h-[340px] sm:h-[420px] rounded-2xl border border-white/10 bg-[#181818] flex flex-col items-center justify-center p-6 text-center">
-                <MapPinIcon className="w-10 h-10 text-[#E10600] mb-3" />
-                <p className="text-base font-semibold text-white">
-                  Localização no Google Maps
-                </p>
-                <p className="text-sm text-gray-400 mt-1 max-w-sm">
-                  {errorMessage ||
-                    'Abra nossa ficha oficial no Google Maps para ver a rota completa e avaliações.'}
-                </p>
-                <a
-                  href={GOOGLE_MAPS_SHARE_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-5 min-h-[44px] inline-flex items-center justify-center gap-2 bg-[#E10600] hover:bg-red-700 text-white font-['Oswald'] uppercase text-sm font-bold px-6 py-2.5 rounded-xl transition-colors"
-                >
-                  Abrir no Google Maps
-                </a>
-              </div>
+              <FreeMapEmbed />
             ) : (
               <InteractiveMapCard place={placeData} />
             )}
