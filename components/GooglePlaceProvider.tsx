@@ -5,7 +5,11 @@ import {
   useApiLoadingStatus,
   useMapsLibrary,
 } from '@vis.gl/react-google-maps';
-import { GOOGLE_MAPS_SHARE_LINK, LOCATION_SEARCH_QUERY } from '../constants';
+import {
+  GOOGLE_MAPS_SHARE_LINK,
+  LOCATION_SEARCH_QUERY,
+  STATIC_PLACE_DATA,
+} from '../constants';
 import { PlaceDetailsData, PlaceReviewData } from '../types';
 
 interface GooglePlaceContextValue {
@@ -33,7 +37,7 @@ const isQuotaError = (err: unknown): boolean => {
 };
 
 const GooglePlaceContext = createContext<GooglePlaceContextValue>({
-  place: null,
+  place: STATIC_PLACE_DATA,
   isLoading: false,
   errorMessage: null,
   hasApiKey: Boolean(MAPS_API_KEY),
@@ -94,7 +98,7 @@ const GooglePlaceFetcher: React.FC<GooglePlaceFetcherProps> = ({ children }) => 
 
         const match = places?.[0];
         if (!match || !match.location) {
-          setPlace(null);
+          setPlace(STATIC_PLACE_DATA);
           return;
         }
 
@@ -139,6 +143,7 @@ const GooglePlaceFetcher: React.FC<GooglePlaceFetcherProps> = ({ children }) => 
         if (isQuotaError(err)) {
           window.dispatchEvent(new CustomEvent('gmp-quota-exceeded'));
         }
+        setPlace(STATIC_PLACE_DATA);
         setErrorMessage(
           'Não foi possível carregar os detalhes e avaliações do Google Maps agora.'
         );
@@ -176,7 +181,7 @@ export const GooglePlaceProvider: React.FC<{ children: React.ReactNode }> = ({
     return (
       <GooglePlaceContext.Provider
         value={{
-          place: null,
+          place: STATIC_PLACE_DATA,
           isLoading: false,
           errorMessage: null,
           hasApiKey: false,

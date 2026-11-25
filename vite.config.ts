@@ -1,6 +1,7 @@
 import path from 'path';
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import { productPreviewPages } from './productPreviewPlugin';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, '.', '');
@@ -16,7 +17,7 @@ export default defineConfig(({ mode }) => {
       port: 3000,
       host: '0.0.0.0',
     },
-    plugins: [react()],
+    plugins: [react(), productPreviewPages()],
     define: {
       'process.env.GOOGLE_MAPS_API_KEY': JSON.stringify(mapsApiKey),
     },

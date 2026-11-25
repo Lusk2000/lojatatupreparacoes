@@ -35,7 +35,7 @@ const Hero: React.FC<HeroProps> = ({ onCtaClick }) => {
       <section className="relative min-h-[72svh] sm:min-h-[78vh] flex items-end sm:items-center text-left sm:text-center text-white overflow-hidden">
         <div className="absolute inset-0 z-0 bg-[#111111]">
           <img
-            src="https://i.ibb.co/x8JZLn94/f250.png"
+            src="/media/hero.webp"
             alt="Caminhonete customizada F250"
             className="w-full h-full object-cover object-center"
             fetchPriority="high"

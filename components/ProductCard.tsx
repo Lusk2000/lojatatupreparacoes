@@ -1,8 +1,8 @@
 import React from 'react';
 import { Product } from '../types';
-import { WhatsAppIcon } from './Icons';
+import AddToCartButton from './AddToCartButton';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { buildWhatsAppProductUrl, normalizeText } from '../lib/utils';
+import { normalizeText } from '../lib/utils';
 import ProductImage from './ProductImage';
 
 interface ProductCardProps {
@@ -80,7 +80,6 @@ const ProductCard: React.FC<ProductCardProps> = ({
   instantAppear = false,
 }) => {
   const { containerRef, animationClasses } = useScrollReveal<HTMLElement>();
-  const whatsappLink = buildWhatsAppProductUrl(product.name);
 
   return (
     <article
@@ -118,6 +117,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
             </button>
           </h3>
 
+          <p className="mt-1.5 text-sm sm:text-base font-bold text-white">{product.price ?? 'Preço em breve'}{product.stock === 0 && ' · Esgotado'}</p>
+
           {product.description && (
             <p className="mt-1.5 text-xs sm:text-sm text-gray-400 leading-snug line-clamp-2">
               {product.description}
@@ -135,16 +136,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
             <span aria-hidden="true">→</span>
           </button>
 
-          <a
-            href={whatsappLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="w-full min-h-[44px] bg-[#E10600] hover:bg-red-700 active:scale-[0.98] text-white font-['Oswald'] uppercase text-xs sm:text-sm font-semibold py-2.5 px-3 rounded-xl transition-all duration-150 flex items-center justify-center gap-1.5 whitespace-nowrap"
-          >
-            <WhatsAppIcon className="w-4 h-4 shrink-0" />
-            <span className="sm:hidden">Consultar</span>
-            <span className="hidden sm:inline">Pedir no WhatsApp</span>
-          </a>
+          <AddToCartButton
+            product={product}
+            className="w-full min-h-[44px] bg-[#E10600] hover:bg-red-700 active:scale-[0.98] text-white font-['Oswald'] uppercase text-xs sm:text-sm font-semibold py-2.5 px-3 rounded-xl transition-all duration-150 flex items-center justify-center gap-1.5 text-center"
+            consultLabel={<><span className="sm:hidden">Consultar</span><span className="hidden sm:inline">Pedir no WhatsApp</span></>}
+          />
         </div>
       </div>
     </article>

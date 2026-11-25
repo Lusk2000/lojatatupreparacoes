@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { MenuIcon, CloseIcon, WhatsAppIcon, SearchIcon } from './Icons';
 import { WHATSAPP_LINK } from '../constants';
 import { useOverlayBehavior } from '../hooks/useOverlayBehavior';
+import CartLink from './CartLink';
 
 interface HeaderProps {
   onTopClick: () => void;
@@ -9,8 +10,8 @@ interface HeaderProps {
   onSearchClick: () => void;
   onHowItWorksClick: () => void;
   onReviewsClick: () => void;
-  onCampaignsClick: () => void;
   onContactClick: () => void;
+  onAccountClick: () => void;
 }
 
 interface NavLinkItemProps {
@@ -45,8 +46,8 @@ const Header: React.FC<HeaderProps> = ({
   onSearchClick,
   onHowItWorksClick,
   onReviewsClick,
-  onCampaignsClick,
   onContactClick,
+  onAccountClick,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -69,8 +70,8 @@ const Header: React.FC<HeaderProps> = ({
     { label: 'Produtos', action: onProductsClick },
     { label: 'Como Funciona', action: onHowItWorksClick },
     { label: 'Depoimentos', action: onReviewsClick },
-    { label: 'Campanhas', action: onCampaignsClick },
     { label: 'Contato', action: onContactClick },
+    { label: 'Minha conta', action: onAccountClick },
   ];
 
   return (
@@ -90,7 +91,7 @@ const Header: React.FC<HeaderProps> = ({
             aria-label="Voltar ao início - Tatu Preparações"
           >
             <img
-              src="https://i.ibb.co/vxtHNfyH/Tatu-prepara-es.png"
+              src="/media/logo.webp"
               alt="Tatu Preparações"
               className="h-10 md:h-12 w-auto object-contain"
               width="120"
@@ -99,17 +100,19 @@ const Header: React.FC<HeaderProps> = ({
             />
           </button>
 
-          <nav className="hidden md:flex items-center gap-7" aria-label="Navegação principal">
+          <nav className="hidden lg:flex items-center gap-7" aria-label="Navegação principal">
             {navItems.map((item) => (
               <NavLinkItem key={item.label} label={item.label} action={item.action} />
             ))}
           </nav>
 
           <div className="flex items-center gap-1 sm:gap-3 shrink-0">
+            <CartLink />
+
             <button
               type="button"
               onClick={onSearchClick}
-              className="md:hidden inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]"
+              className="lg:hidden inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]"
               aria-label="Buscar produtos"
             >
               <SearchIcon className="w-5 h-5" />
@@ -118,7 +121,7 @@ const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="md:hidden inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg text-gray-200 hover:text-white hover:bg-white/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]"
+              className="lg:hidden inline-flex items-center justify-center min-w-[44px] min-h-[44px] rounded-lg text-gray-200 hover:text-white hover:bg-white/10 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E10600]"
               aria-expanded={isOpen}
               aria-label="Abrir menu"
             >
@@ -129,7 +132,7 @@ const Header: React.FC<HeaderProps> = ({
               href={WHATSAPP_LINK}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:inline-flex items-center gap-2 bg-[#E10600] hover:bg-red-700 text-white font-['Oswald'] uppercase text-sm font-medium py-2.5 px-5 rounded-lg transition-colors whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-white"
+              className="hidden lg:inline-flex items-center gap-2 bg-[#E10600] hover:bg-red-700 text-white font-['Oswald'] uppercase text-sm font-medium py-2.5 px-5 rounded-lg transition-colors whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-white"
               aria-label="Fale Conosco no WhatsApp"
             >
               <WhatsAppIcon className="w-4 h-4" />
@@ -140,7 +143,7 @@ const Header: React.FC<HeaderProps> = ({
       </header>
 
       <div
-        className={`md:hidden fixed inset-0 bg-black/75 z-[9998] backdrop-blur-sm transition-opacity duration-200 ${
+        className={`lg:hidden fixed inset-0 bg-black/75 z-[9998] backdrop-blur-sm transition-opacity duration-200 ${
           isOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
         onClick={closeMenu}
@@ -148,7 +151,7 @@ const Header: React.FC<HeaderProps> = ({
       />
 
       <aside
-        className={`md:hidden fixed top-0 right-0 w-[82%] max-w-xs h-full bg-[#161616] border-l border-white/10 shadow-2xl transform transition-transform duration-200 ease-out z-[9999] flex flex-col ${
+        className={`lg:hidden fixed top-0 right-0 w-[82%] max-w-xs h-full bg-[#161616] border-l border-white/10 shadow-2xl transform transition-transform duration-200 ease-out z-[9999] flex flex-col ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
         aria-label="Menu mobile"

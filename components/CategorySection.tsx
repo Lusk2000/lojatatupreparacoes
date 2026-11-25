@@ -1,5 +1,5 @@
 import React from 'react';
-import { STATIC_PRODUCTS } from '../constants';
+import { useCatalog } from '../hooks/useCatalog';
 import { Product } from '../types';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import ProductCard from './ProductCard';
@@ -29,13 +29,14 @@ const CategorySection: React.FC<CategorySectionProps> = ({
   const { containerRef: headerRef, animationClasses: headerAnimation } =
     useScrollReveal<HTMLDivElement>();
 
-  const products = STATIC_PRODUCTS.filter((product) => product.category === category);
+  const catalog = useCatalog();
+  const products = catalog?.products.filter((product) => product.category === category) ?? [];
 
   if (products.length === 0) return null;
 
   const isSingleFeatured = products.length === 1;
   const featured = products[0];
-  const featuredWaLink = buildWhatsAppProductUrl(featured.name);
+  const featuredWaLink = buildWhatsAppProductUrl(featured);
 
   return (
     <section
@@ -85,6 +86,7 @@ const CategorySection: React.FC<CategorySectionProps> = ({
               <h3 className="font-['Oswald'] text-2xl sm:text-3xl font-bold text-white leading-tight">
                 {featured.name}
               </h3>
+              <p className="mt-2 text-lg font-bold text-[#E10600]">{featured.price ?? 'Preço em breve'}</p>
               {featured.description && (
                 <p className="mt-3 text-sm sm:text-base text-gray-300 leading-relaxed">
                   {featured.description}

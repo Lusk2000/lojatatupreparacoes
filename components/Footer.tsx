@@ -16,25 +16,22 @@ const Footer: React.FC = () => {
         </div>
 
         <nav className="flex flex-wrap items-center justify-center gap-5 text-sm text-gray-400" aria-label="Links do rodapé">
-          <a href="#produtos" className="hover:text-white transition-colors py-1">
+          <a href="/#produtos" className="hover:text-white transition-colors py-1">
             Produtos
           </a>
-          <a href="#como-funciona" className="hover:text-white transition-colors py-1">
+          <a href="/#como-funciona" className="hover:text-white transition-colors py-1">
             Como Funciona
           </a>
-          <a href="#duvidas" className="hover:text-white transition-colors py-1">
+          <a href="/#duvidas" className="hover:text-white transition-colors py-1">
             Dúvidas
           </a>
-          <a href="#localizacao" className="hover:text-white transition-colors py-1">
+          <a href="/#localizacao" className="hover:text-white transition-colors py-1">
             Localização
           </a>
-          <a href="#depoimentos" className="hover:text-white transition-colors py-1">
+          <a href="/#depoimentos" className="hover:text-white transition-colors py-1">
             Depoimentos
           </a>
-          <a href="#campanhas" className="hover:text-white transition-colors py-1">
-            Campanhas
-          </a>
-          <a href="#contato" className="hover:text-white transition-colors py-1">
+          <a href="/#contato" className="hover:text-white transition-colors py-1">
             Contato
           </a>
         </nav>

@@ -3,6 +3,8 @@ import { WrenchIcon } from './Icons';
 
 interface ProductImageProps {
   src: string;
+  // Carregada por trás; a capa (src) aparece enquanto isso.
+  animation?: string;
   alt: string;
   className?: string;
   fallbackClassName?: string;
@@ -12,6 +14,7 @@ interface ProductImageProps {
 
 const ProductImage: React.FC<ProductImageProps> = ({
   src,
+  animation,
   alt,
   className = 'w-full h-full object-cover',
   fallbackClassName = 'w-full h-full flex flex-col items-center justify-center p-4 bg-gradient-to-br from-[#1f1f1f] to-[#121212] text-gray-500',
@@ -20,9 +23,22 @@ const ProductImage: React.FC<ProductImageProps> = ({
 }) => {
   const [hasError, setHasError] = useState(false);
 
+  const [loaded, setLoaded] = useState('');
+
   useEffect(() => {
     setHasError(false);
   }, [src]);
+
+  useEffect(() => {
+    if (!animation) return;
+    const image = new Image();
+    image.referrerPolicy = 'no-referrer';
+    image.onload = () => setLoaded(animation);
+    image.src = animation;
+    return () => {
+      image.onload = null;
+    };
+  }, [animation]);
 
   if (hasError || !src) {
     return (
@@ -35,7 +51,7 @@ const ProductImage: React.FC<ProductImageProps> = ({
 
   return (
     <img
-      src={src}
+      src={animation && loaded === animation ? animation : src}
       alt={alt}
       className={className}
       loading={loading}

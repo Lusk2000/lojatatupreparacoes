@@ -1,22 +1,19 @@
 import React from 'react';
 import { Product } from '../types';
-import { WhatsAppIcon, CloseIcon, MegaphoneIcon } from './Icons';
-import { buildWhatsAppProductUrl } from '../lib/utils';
+import { CloseIcon } from './Icons';
+import AddToCartButton from './AddToCartButton';
 import { useOverlayBehavior } from '../hooks/useOverlayBehavior';
 import ProductImage from './ProductImage';
 
 interface ProductModalProps {
   product: Product | null;
   onClose: () => void;
-  onCreateCampaign?: (product: Product) => void;
 }
 
-const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onCreateCampaign }) => {
+const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
   useOverlayBehavior(Boolean(product), onClose);
 
   if (!product) return null;
-
-  const whatsappUrl = buildWhatsAppProductUrl(product.name);
 
   return (
     <div
@@ -46,6 +43,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onCreateC
         <div className="w-full md:w-1/2 bg-[#121212] flex items-center justify-center p-4 h-52 sm:h-64 md:h-auto shrink-0">
           <ProductImage
             src={product.image}
+            animation={product.animation}
             alt={product.name}
             className="max-w-full max-h-full object-contain rounded-lg"
             fallbackClassName="flex flex-col items-center justify-center text-gray-500 p-6"
@@ -65,6 +63,7 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onCreateC
             >
               {product.name}
             </h3>
+            <p className="mt-2 text-xl font-bold text-[#E10600]">{product.price ?? 'Preço em breve'}{product.stock === 0 && ' · Esgotado'}</p>
             <div className="w-12 h-1 bg-[#E10600] my-4" />
 
             {product.description ? (
@@ -79,26 +78,12 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onCreateC
           </div>
 
           <div className="p-4 sm:p-6 border-t border-white/10 bg-[#141414] shrink-0 pb-[calc(1rem+env(safe-area-inset-bottom))] space-y-2.5">
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+            <AddToCartButton
+              product={product}
+              showCartLink
               className="w-full min-h-[48px] bg-[#E10600] hover:bg-red-700 active:scale-[0.98] text-white font-['Oswald'] uppercase text-base md:text-lg font-bold py-3 px-6 rounded-xl transition-all duration-150 shadow-lg flex items-center justify-center gap-2"
-            >
-              <WhatsAppIcon className="w-5 h-5" />
-              Comprar pelo WhatsApp
-            </a>
-
-            {onCreateCampaign && (
-              <button
-                type="button"
-                onClick={() => onCreateCampaign(product)}
-                className="w-full min-h-[44px] bg-white/5 hover:bg-white/10 border border-white/15 text-gray-200 hover:text-white font-['Oswald'] uppercase text-sm font-semibold py-2.5 px-4 rounded-xl transition-colors flex items-center justify-center gap-2"
-              >
-                <MegaphoneIcon className="w-4 h-4 text-[#E10600]" />
-                Criar Campanha WhatsApp (WAME)
-              </button>
-            )}
+              consultLabel={"Consultar pelo WhatsApp"}
+            />
           </div>
         </div>
       </div>
